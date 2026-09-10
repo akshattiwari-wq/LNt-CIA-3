@@ -9,8 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static UI files from the 'public' folder
+app.use(express.static('public'));
+
 // Base Route
-app.get('/', (req, res) => {
+app.get('/api-status', (req, res) => {
   res.send('SaaS Subscription Billing API Running...');
 });
 
@@ -20,6 +23,7 @@ const userRoutes = require('./src/routes/userRoutes');
 const planRoutes = require('./src/routes/planRoutes');
 const subscriptionRoutes = require('./src/routes/subscriptionRoutes');
 const billingRoutes = require('./src/routes/billingRoutes');
+//const extendedRoutes = require('./src/routes/extendedRoutes');
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
@@ -27,6 +31,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/plans', planRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/billing', billingRoutes);
+//app.use('/api', extendedRoutes);
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/saas_billing_p17')
